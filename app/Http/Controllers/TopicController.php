@@ -25,12 +25,16 @@ class TopicController extends ApiController
         $this->messageRepository = $messageRepository;
     }
 
+    /**
+     * Attach a new/existing subscription
+     * with a topic
+     */
 
     public function subscribe(Topic $topic, SubscriberRequest $request)
     {
 
         Subscribe::dispatch($topic, $request->url);
-        
+
         $data = [
             'url' => $request->url,
             'topic' => $topic->name,
