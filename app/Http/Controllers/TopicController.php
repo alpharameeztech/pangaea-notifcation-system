@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\MessageRequest;
 use App\Http\Requests\SubscriberRequest;
 use App\Http\Requests\TopicRequest;
 use App\Http\Resources\TopicResource;
@@ -44,6 +45,22 @@ class TopicController extends ApiController
         return $this->setStatusCode(200)->respondCreated($data);
     }
 
+    /**
+     * Publish a message to the topic
+     * 
+     */
+    public function publishMessage(Topic $topic, MessageRequest $request){
+
+        $message = $this->messageRepository->store($topic, $request->message);
+
+        $data = [
+            'topic' => $topic->name,
+            'topic_slug' => $topic->slug,
+            'data' => $request->message
+        ];
+
+        return $this->setStatusCode(201)->respondCreated($data);
+    }
 
     /**
      * Display a listing of the resource.
