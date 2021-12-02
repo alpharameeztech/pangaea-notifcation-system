@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\TopicRequest;
+use App\Http\Resources\TopicResource;
 use App\Interfaces\MessageRepositoryInterface;
 use App\Interfaces\TopicRepositoryInterface;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 
 class TopicController extends ApiController
@@ -52,6 +54,18 @@ class TopicController extends ApiController
     public function store(TopicRequest $request)
     {
         $topic = $this->topicRepository->store($request->name);
+
+        if ($topic instanceof Topic) {
+
+            $formattedResource = new TopicResource($topic);
+
+            return $this->setStatusCode(201)->respondCreated($formattedResource);
+
+        } else {
+
+            return $this->setStatusCode(502)->respondWithError('Something went wrong. Check logs for details');
+            
+        }
     }
 
     /**
