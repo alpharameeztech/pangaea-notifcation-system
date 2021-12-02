@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\TopicRequest;
 use App\Interfaces\MessageRepositoryInterface;
 use App\Interfaces\TopicRepositoryInterface;
 use Illuminate\Http\Request;
 
-class TopicController extends Controller
+class TopicController extends ApiController
 {
     protected $topicRepository;
     protected $messageRepository;
