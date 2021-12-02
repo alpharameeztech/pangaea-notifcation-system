@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\SubscriberRequest;
 use App\Http\Requests\TopicRequest;
 use App\Http\Resources\TopicResource;
 use App\Interfaces\MessageRepositoryInterface;
@@ -18,10 +19,22 @@ class TopicController extends ApiController
     function __construct(
         TopicRepositoryInterface $topicRepository,
         MessageRepositoryInterface $messageRepository
-        )
-    {
+    ) {
         $this->topicRepository = $topicRepository;
         $this->messageRepository = $messageRepository;
+    }
+
+
+    public function subscribe(Topic $topic, SubscriberRequest $request)
+    {
+
+        $data = [
+            'url' => $request->url,
+            'topic' => $topic->name,
+            'topic_slug' => $topic->slug
+        ];
+
+        return $this->setStatusCode(200)->respondCreated($data);
     }
 
 
@@ -60,11 +73,9 @@ class TopicController extends ApiController
             $formattedResource = new TopicResource($topic);
 
             return $this->setStatusCode(201)->respondCreated($formattedResource);
-
         } else {
 
             return $this->setStatusCode(502)->respondWithError('Something went wrong. Check logs for details');
-            
         }
     }
 
