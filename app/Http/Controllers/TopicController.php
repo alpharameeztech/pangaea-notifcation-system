@@ -8,6 +8,7 @@ use App\Http\Requests\TopicRequest;
 use App\Http\Resources\TopicResource;
 use App\Interfaces\MessageRepositoryInterface;
 use App\Interfaces\TopicRepositoryInterface;
+use App\Jobs\Subscribe;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,8 @@ class TopicController extends ApiController
     public function subscribe(Topic $topic, SubscriberRequest $request)
     {
 
+        Subscribe::dispatch($topic, $request->url);
+        
         $data = [
             'url' => $request->url,
             'topic' => $topic->name,
