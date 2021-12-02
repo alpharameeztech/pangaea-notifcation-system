@@ -18,3 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('topic', 'App\Http\Controllers\TopicController@store')->name('topic.store');
+Route::post('/subscribe/{topic}', 'App\Http\Controllers\TopicController@subscribe')->name('topic.susbcribe');
