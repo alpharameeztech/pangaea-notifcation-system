@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('topic', 'App\Http\Controllers\TopicController@store')->name('topic.store');
 Route::post('/subscribe/{topic}', 'App\Http\Controllers\TopicController@subscribe')->name('topic.susbcribe');
-Route::post('/publish/{topic}', 'App\Http\Controllers\TopicController@publishMessage')->name('topic.publisj.message');
+Route::post('/publish/{topic}', 'App\Http\Controllers\TopicController@publishMessage')->name('topic.publish.message');
