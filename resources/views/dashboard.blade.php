@@ -21,6 +21,7 @@
                         <table class="w-full text-left rounded-lg">
                             <thead>
                                 <tr class="text-gray-800 border border-b-0">
+                                    <th class="px-4 py-3">ID</th>
                                     <th class="px-4 py-3">Name</th>
                                     <th class="px-4 py-3">Slug</th>
                                     <th class="px-4 py-3">Total Subscriptions</th>
@@ -31,7 +32,7 @@
                                 @foreach ( $topics as $topic )
 
                                 <tr class="w-full font-light text-gray-700 bg-gray-100 whitespace-no-wrap border border-b-0">
-                                    
+                                    <td class="px-4 py-4">{{ $topic->id }}</td>
                                     <td class="px-4 py-4">{{ $topic->name }}</td>
                                     <td class="px-4 py-4">{{ $topic->slug }}</td>
                                     <td class="px-4 py-4">{{ $topic->subscribers()->count() }}</td>
@@ -60,9 +61,10 @@
                         <table class="w-full text-left rounded-lg">
                             <thead>
                                 <tr class="text-gray-800 border border-b-0">
+                                    <th class="px-4 py-3">ID</th>
                                     <th class="px-4 py-3">Content</th>
-
                                     <th class="px-4 py-3">Topic</th>
+                                    <th class="px-4 py-3">Topic Slug</th>
                                     <th class="px-4 py-3">Created at</th>
                                 </tr>
                             </thead>
@@ -70,9 +72,10 @@
                                 @foreach ( $messages as $message )
 
                                 <tr class="w-full font-light text-gray-700 bg-gray-100 whitespace-no-wrap border border-b-0">
-                                    
+                                    <td class="px-4 py-4">{{ $message->id }}</td>
                                     <td class="px-4 py-4">{{ $message->content }}</td>
                                     <td class="px-4 py-4">{{ $message->topic->name }}</td>
+                                    <td class="px-4 py-4">{{ $message->topic->slug }}</td>
                                     <td class="px-4 py-4">
                                         <span class="text-sm bg-green-500 text-white rounded-full px-2 py-1"> {{ \Carbon\Carbon::parse($message->created_at )->diffForHumans() }}</span>
                                     </td>
@@ -98,8 +101,8 @@
                     <table class="w-full text-left rounded-lg">
                         <thead>
                             <tr class="text-gray-800 border border-b-0">
+                                <th class="px-4 py-3">ID</th>
                                 <th class="px-4 py-3">URL</th>
-
                                 <th class="px-4 py-3">Subscriber Subscriptions</th>
                                 <th class="px-4 py-3">Created at</th>
                             </tr>
@@ -108,7 +111,7 @@
                             @foreach ( $subscribers as $subscriber )
 
                             <tr class="w-full font-light text-gray-700 bg-gray-100 whitespace-no-wrap border border-b-0">
-                                
+                                <td class="px-4 py-4">{{ $subscriber->id }}</td>
                                 <td class="px-4 py-4">{{ $subscriber->url }}</td>
                                 <td class="px-4 py-4">{{ $subscriber->subscriptions()->count() }}</td>
 
