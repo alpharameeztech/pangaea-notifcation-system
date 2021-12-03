@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessagePublished;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\MessageRequest;
 use App\Http\Requests\SubscriberRequest;
@@ -58,6 +59,9 @@ class TopicController extends ApiController
             'topic_slug' => $topic->slug,
             'data' => $request->message
         ];
+
+        //fire an event to notify subscribers
+        MessagePublished::dispatch($message);
 
         return $this->setStatusCode(201)->respondCreated($data);
     }
