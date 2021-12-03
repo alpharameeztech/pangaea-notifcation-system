@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notification;
 class NotifySubscribers extends Notification
 {
     use Queueable;
+    protected $message;
 
     /**
      * Create a new notification instance.
