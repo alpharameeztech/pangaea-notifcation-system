@@ -1,66 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Pangaea Notification System
+Created a HTTP notification system. A server (or set of servers) will keep track of topics ->
+subscribers where a topic is a string and a subscriber is an HTTP endpoint. When a message is published on a topic, it
+should be forwarded to all subscriber endpoints.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Publisher Server Endpoints
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Commands to run
+1) composer install
+2) npm install
+3) php artisan migrate
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Note
+1) MySQL: Make sure to connect with MySQL first.
+   
+## Dashboard
+![Screenshot from 2021-12-03 14-25-42](https://user-images.githubusercontent.com/36469012/144578688-2d38168d-1a77-4eae-a91f-9dced4972bfe.png)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Note
+Make sure to create the topic first via calling topic post API
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Calling an API[site_url/api/topic] (POST Request) with valid data
+**Expected Body:** 
+```
+{
+   	"name" : string
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Required Headers:** 
+```
+{
+    Accept: application/json,
+    Content-Type: application/json
+}
+```
 
-## Laravel Sponsors
+**Success Response Example:** 
+```
+{
+    "data": {
+        "message": {
+            "name": "topicone",
+            "slug": "iWhPw",
+            "created_at": "2021-12-03T09:07:31.000000Z",
+            "updated_at": "2021-12-03T09:07:31.000000Z"
+        },
+        "statusCode": 201
+    }
+}
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+![Screenshot from 2021-12-02 20-59-32](https://user-images.githubusercontent.com/36469012/144459973-1157611d-bec3-4296-b840-e440fe2ba1d2.png)
 
-## Contributing
+## Calling an API[site_url/api/topic] (POST Request) with invalid data
+![Screenshot from 2021-12-02 21-20-47](https://user-images.githubusercontent.com/36469012/144461475-28ae5a63-26b1-4c1c-b7ba-def81ade680b.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Calling an API[site_url/api/subscribe/{topic_slug}] with valid data 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Expected Body:** 
+```
+{
+   	"url" : string
+}
+```
 
-## Security Vulnerabilities
+**Required Headers:** 
+```
+{
+    Accept: application/json,
+    Content-Type: application/json
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Success Response Example:** 
+```
+{
+    "data": {
+        "message": {
+            "url": "https://www.msn2.com",
+            "topic": "topicone",
+            "topic_slug": "iWhPw"
+        },
+        "statusCode": 200
+    }
+}
+```
 
-## License
+![Screenshot from 2021-12-02 21-00-25](https://user-images.githubusercontent.com/36469012/144460012-438a6331-7718-407e-b361-8d0efae4def9.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Calling an API[site_url/api/subscribe/{topic_slug}] with invalid data 
+![Screenshot from 2021-12-02 21-19-52](https://user-images.githubusercontent.com/36469012/144461547-aa1fdbbc-0ed3-4bd1-83db-140b1a4166d9.png)
+
+
+## Calling an API[site_url/api/publish/{topic_slug}] with valid data
+
+**Expected Body:** 
+```
+{
+   	"message" : text
+}
+```
+
+**Required Headers:** 
+```
+{
+    Accept: application/json,
+    Content-Type: application/json
+}
+```
+
+**Success Response Example:** 
+```
+{
+    "data": {
+        "message": {
+            "topic": "topicone",
+            "topic_slug": "iWhPw",
+            "data": "lorem ipsum"
+        },
+        "statusCode": 201
+    }
+}
+```
+
+
+![Screenshot from 2021-12-02 21-01-10](https://user-images.githubusercontent.com/36469012/144460023-81d2e8c2-5910-4af5-ae18-2a752c356737.png)
+
+## Calling an API[site_url/api/publish/{topic_slug}] with invalid data
+![Screenshot from 2021-12-02 21-21-11](https://user-images.githubusercontent.com/36469012/144461615-639d5159-b493-4ccc-9a79-93a16cd9b685.png)
+
+
+## Telescope
+
+![Screenshot from 2021-12-02 21-02-19](https://user-images.githubusercontent.com/36469012/144460104-5c277596-48f6-4451-abe1-83edae4a1851.png)
+![Screenshot from 2021-12-02 21-02-48](https://user-images.githubusercontent.com/36469012/144460129-66c884b0-e91c-4a79-bb7d-950663958078.png)
+![Screenshot from 2021-12-02 21-03-15](https://user-images.githubusercontent.com/36469012/144460185-6322aefa-44e8-42bd-868f-9c95fe42cb5d.png)
+
+
